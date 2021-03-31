@@ -1,7 +1,5 @@
 package me.krit.hychat.server.chat;
 
-import me.krit.hychat.observers.ChatObserver;
-import me.krit.hychat.server.Server;
 import me.krit.hychat.window.WindowLayoutCoordinator;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -28,9 +26,9 @@ public class ChatClient
     {
         if (e.type == 0)
         {
-            String message = e.message.getUnformattedText();
+            String message = e.message.getUnformattedText().replaceAll("\\u00A7.", "");
             //System.out.print("Chat Client ".concat(context.title).concat(" Recieved \"").concat(message).concat("\""));
-            if (context.messageQualifiesForContext(message.replaceAll("§\\w", "")))
+            if (context.messageQualifiesForContext(message))
                 WindowLayoutCoordinator.getInstance().displayLineFromContext(context, message);
         }
     }

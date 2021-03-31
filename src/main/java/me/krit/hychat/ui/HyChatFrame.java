@@ -65,6 +65,8 @@ public class HyChatFrame extends JFrame
         setBackground(Color.decode("#282a36"));
         pack();
         setLocationRelativeTo(getOwner());
+        setPreferredSize(new Dimension(600, 500));
+        setSize(600, 450);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
@@ -126,33 +128,17 @@ public class HyChatFrame extends JFrame
 
             //======== scrollPane2 ========
             {
-                scrollPane2.setBorder(new EmptyBorder(5, 5, 5, 5));
+                scrollPane2.setBorder(null);
                 scrollPane2.setViewportView(memberEditorPane);
             }
 
-            GroupLayout layout = new GroupLayout(this);
-            setLayout(layout);
-            layout.setHorizontalGroup(
-                    layout.createParallelGroup()
-                            .addGroup(layout.createSequentialGroup()
-                                    .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                            .addComponent(textArea1, GroupLayout.PREFERRED_SIZE, 1037, GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 1037, GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(scrollPane2, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE)
-                                    .addGap(0, 0, 0))
-            );
-            layout.setVerticalGroup(
-                    layout.createParallelGroup()
-                            .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup()
-                                            .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 638, GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(scrollPane2))
-                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(textArea1, GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                                    .addContainerGap())
-            );
+            setLayout(null);
+            scrollPane1.setBounds(0,0,500,350);
+            scrollPane2.setBounds(500,0,100,350);
+            textArea1.setBounds(10,350,480,20);
+            add(scrollPane1);
+            //add(scrollPane2);
+            add(textArea1);
         }
 
         // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables

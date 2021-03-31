@@ -15,6 +15,7 @@ public class ChatContext
 
     public boolean messageQualifiesForContext(String message)
     {
+        System.out.println(message);
         return message.startsWith(chatPrefix);
     }
 }

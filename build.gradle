@@ -38,7 +38,10 @@ minecraft {
     mappings = "stable_20"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
-
+configurations {
+    shade
+    compile.extendsFrom shade
+}
 dependencies {
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
@@ -56,8 +59,7 @@ dependencies {
     // except that these dependencies get remapped to your current MCP mappings
     //deobfCompile 'com.mod-buildcraft:buildcraft:6.0.8:dev'
     //deobfProvided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    compile 'com.github.isyscore:darcula-theme:1.0.0'
+    shade fileTree(dir: 'libs', include: 'darcula.jar')
 
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
@@ -84,3 +86,18 @@ processResources
                 exclude 'mcmod.info'
             }
         }
+
+jar {
+    configurations.shade.each { dep ->
+        from(project.zipTree(dep)){
+            exclude 'META-INF', 'META-INF/**'
+        }
+    }
+}
+
+task copyCompiledMod(type: Copy) {
+
+    outputs.upToDateWhen { false }
+    from file("$buildDir/libs/$archivesBaseName-${version}.jar")
+    into file("${System.properties['user.home']}/curseforge/minecraft/Instances/Hypixel/mods")
+}

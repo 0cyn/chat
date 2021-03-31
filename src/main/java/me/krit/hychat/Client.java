@@ -16,6 +16,8 @@ public class Client
     public void entityJoinWorld(EntityJoinWorldEvent event)
     {
         if (event.entity instanceof EntityPlayerSP) {
+            if (currentServer != null)
+                return;
             EntityPlayerSP player = (EntityPlayerSP) event.entity;
             ServerData serverData = Minecraft.getMinecraft().getCurrentServerData();
             if (serverData != null) {
