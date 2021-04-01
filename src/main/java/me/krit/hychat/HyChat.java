@@ -1,5 +1,6 @@
 package me.krit.hychat;
 
+import com.formdev.flatlaf.FlatDarkLaf;
 import me.krit.hychat.window.WindowLayoutCoordinator;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -7,6 +8,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+
+import javax.swing.*;
 
 @Mod(
         modid = "HyChat",
@@ -19,7 +22,7 @@ public class HyChat
     public static final String VERSION = "1.0.0";
     public static Configuration config;
     public static WindowLayoutCoordinator windowController;
-    public static Client client = new Client();
+    public static Client client = Client.getInstance();
 
 
     @EventHandler
@@ -27,6 +30,7 @@ public class HyChat
     {
         config = new Configuration(e.getSuggestedConfigurationFile());
         config.load();
+
     }
 
     public static void setConfigValue(String value, boolean option)

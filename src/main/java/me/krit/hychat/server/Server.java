@@ -7,6 +7,8 @@ import net.minecraft.client.multiplayer.ServerData;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Server
 {
@@ -14,6 +16,7 @@ public class Server
     protected EntityPlayerSP client;
     protected ServerData server;
     protected ArrayList<ChatClient> chatClients = new ArrayList<>();
+    protected Map<String, ChatClient> chatClientMap = new HashMap<>();
 
     public Server(EntityPlayerSP client, ServerData server) {
         this.client = client;
@@ -22,7 +25,7 @@ public class Server
 
     public void configureChatClients()
     {
-        chatClients.add(new ChatClient("Lobby", "", ChatType.PUBLIC));
+        chatClients.add(new ChatClient("Lobby", "", ChatType.PUBLIC, ""));
         registerChatClients();
     }
 
@@ -30,11 +33,13 @@ public class Server
     {
         for (ChatClient client : chatClients)
         {
+            chatClientMap.put(client.context.title, client);
             MinecraftForge.EVENT_BUS.register(client);
         }
     }
 
-    public void deliverChatMessage(String message) {
-        client.sendChatMessage(message);
+    public void sendChatFromTab(String tabName, String message)
+    {
+        chatClientMap.get(tabName).sendMessage(message);
     }
 }

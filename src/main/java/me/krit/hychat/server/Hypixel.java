@@ -15,9 +15,9 @@ public class Hypixel extends Server
 
     public void configureChatClients()
     {
-        chatClients.add(new ChatClient("Lobby", "[", ChatType.PUBLIC));
-        chatClients.add(new ChatClient("Guild", "Guild >", ChatType.PUBLIC));
-        chatClients.add(new ChatClient("Party", "Party >", ChatType.PUBLIC));
+        chatClients.add(new ChatClient("Lobby", "[", ChatType.PUBLIC, "/achat "));
+        chatClients.add(new ChatClient("Guild", "Guild >", ChatType.PUBLIC,"/gchat "));
+        chatClients.add(new ChatClient("Party", "Party >", ChatType.PUBLIC, "/pchat "));
 
         registerChatClients();
     }

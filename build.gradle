@@ -19,7 +19,7 @@ plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
-version = "1.0"
+version = "0.0.1"
 group = "me.krit" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "HyChat"
 
@@ -59,7 +59,7 @@ dependencies {
     // except that these dependencies get remapped to your current MCP mappings
     //deobfCompile 'com.mod-buildcraft:buildcraft:6.0.8:dev'
     //deobfProvided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-    shade fileTree(dir: 'libs', include: 'darcula.jar')
+    shade fileTree(dir: 'libs', include: 'flatlaf-1.1.1.jar')
 
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
