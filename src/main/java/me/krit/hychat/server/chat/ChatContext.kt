@@ -1,23 +1,10 @@
-package me.krit.hychat.server.chat;
+package me.krit.hychat.server.chat
 
-public class ChatContext
-{
-    public String title;
-    public String chatPrefix;
-    public ChatType type;
-    public String sendToContextCommand;
+import me.krit.hychat.server.chat.ChatType
 
-    public ChatContext(String title, String chatPrefix, ChatType type, String sendToContextCommand)
-    {
-        this.title = title;
-        this.chatPrefix = chatPrefix;
-        this.type = type;
-        this.sendToContextCommand = sendToContextCommand;
-    }
-
-    public boolean messageQualifiesForContext(String message)
-    {
-        System.out.println(message);
-        return message.startsWith(chatPrefix);
+class ChatContext(var title: String, var chatPrefix: String, var type: ChatType, var sendToContextCommand: String) {
+    fun messageQualifiesForContext(message: String): Boolean {
+        println(message)
+        return message.startsWith(chatPrefix)
     }
 }

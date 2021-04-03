@@ -1,57 +1,43 @@
-package me.krit.hychat;
+package me.krit.hychat
 
-import com.formdev.flatlaf.FlatDarkLaf;
-import me.krit.hychat.window.WindowLayoutCoordinator;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
+import net.minecraftforge.fml.common.event.FMLInitializationEvent
+import net.minecraftforge.common.MinecraftForge
+import me.krit.hychat.window.WindowLayoutCoordinator
+import net.minecraftforge.common.config.Configuration
+import net.minecraftforge.fml.common.Mod
 
-import javax.swing.*;
-
-@Mod(
-        modid = "HyChat",
-        version = "1.0.0",
-        acceptedMinecraftVersions = "[1.8,1.8.9]"
-)
-public class HyChat
-{
-    public static final String MODID = "HyChat";
-    public static final String VERSION = "1.0.0";
-    public static Configuration config;
-    public static WindowLayoutCoordinator windowController;
-    public static Client client = Client.getInstance();
-
-
-    @EventHandler
-    public void preinit(FMLPreInitializationEvent e)
-    {
-        config = new Configuration(e.getSuggestedConfigurationFile());
-        config.load();
-
+@Mod(modid = "HyChat", version = "1.0.0", acceptedMinecraftVersions = "[1.8,1.8.9]")
+class HyChat {
+    @Mod.EventHandler
+    fun preinit(e: FMLPreInitializationEvent) {
+        config = Configuration(e.suggestedConfigurationFile)
+        config!!.load()
     }
 
-    public static void setConfigValue(String value, boolean option)
-    {
-        Configuration var10001 = config;
-        config.get("general", value, option).set(option);
-        config.save();
+    @Mod.EventHandler
+    fun init(event: FMLInitializationEvent?) {
+        MinecraftForge.EVENT_BUS.register(this)
+        MinecraftForge.EVENT_BUS.register(client)
+        MinecraftForge.EVENT_BUS.register(WindowLayoutCoordinator.instance.frame)
     }
 
-    public static void setConfigValue(String value, String option)
-    {
-        Configuration var10001 = config;
-        config.get("general", value, option).set(option);
-        config.save();
-    }
+    companion object {
+        const val MODID = "HyChat"
+        const val VERSION = "1.0.0"
+        var config: Configuration? = null
+        var windowController: WindowLayoutCoordinator? = null
+        var client = Client.instance
+        fun setConfigValue(value: String?, option: Boolean) {
+            val var10001 = config
+            config!!["general", value, option].set(option)
+            config!!.save()
+        }
 
-    @EventHandler
-    public void init(FMLInitializationEvent event)
-    {
-        MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(client);
-        MinecraftForge.EVENT_BUS.register(WindowLayoutCoordinator.getInstance().getFrame());
+        fun setConfigValue(value: String?, option: String?) {
+            val var10001 = config
+            config!!["general", value, option].set(option)
+            config!!.save()
+        }
     }
 }

@@ -1,43 +1,42 @@
-package me.krit.hychat.server.chat;
+package me.krit.hychat.server.chat
 
-import me.krit.hychat.Client;
-import me.krit.hychat.window.WindowLayoutCoordinator;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import me.krit.hychat.Client
+import me.krit.hychat.server.chat.ChatContext
+import me.krit.hychat.window.WindowLayoutCoordinator
+import me.krit.hychat.server.chat.ChatType
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import net.minecraftforge.client.event.ClientChatReceivedEvent
 
-public class ChatClient
-{
-    public ChatContext context;
+class ChatClient {
+    var context: ChatContext
 
-    public ChatClient(ChatContext context)
-    {
-        this.context = context;
-        System.out.println("Registered ChatClient ".concat(context.title));
-        WindowLayoutCoordinator.getInstance().createTabForChatContext(context);
+    constructor(context: ChatContext) {
+        this.context = context
+        println("Registered ChatClient " + context.title)
+        WindowLayoutCoordinator.instance.createTabForChatContext(context)
     }
 
-    public ChatClient(String title, String chatPrefix, ChatType type, String sendToContextCommand){
-        this.context = new ChatContext(title, chatPrefix, type, sendToContextCommand);
-        System.out.println("Registered ChatClient ".concat(context.title));
-        WindowLayoutCoordinator.getInstance().createTabForChatContext(context);
+    constructor(title: String, chatPrefix: String, type: ChatType, sendToContextCommand: String) {
+        context = ChatContext(title, chatPrefix, type, sendToContextCommand)
+        println("Registered ChatClient " + context.title)
+        WindowLayoutCoordinator.instance.createTabForChatContext(context)
     }
 
     @SubscribeEvent
-    public void onChat(ClientChatReceivedEvent e)
-    {
-        if (e.type == 0)
-        {
-            String message = e.message.getUnformattedText();
-            //System.out.print("Chat Client ".concat(context.title).concat(" Recieved \"").concat(message).concat("\""));
-            if (context.messageQualifiesForContext(message.replaceAll("\\u00A7.", "")))
-                WindowLayoutCoordinator.getInstance().displayLineFromContext(context, message);
+    fun onChat(e: ClientChatReceivedEvent) {
+        if (e.type.toInt() == 0) {
+            val message = e.message.unformattedText
+            if (context.messageQualifiesForContext(message.replace("\\u00A7.".toRegex(), ""))) displayLineInRelavantTab(message)
         }
     }
 
-    public void sendMessage(String message)
-    {
-        message = context.sendToContextCommand + message;
-        Client.getInstance().sendChat(message);
+    fun displayLineInRelavantTab(message: String) {
+        WindowLayoutCoordinator.instance.displayLineFromContext(context, message)
     }
 
+    fun sendMessageToServer(message: String) {
+        var message = message
+        message = context.sendToContextCommand + message
+        Client.instance.sendChat(message)
+    }
 }

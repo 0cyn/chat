@@ -1,37 +1,27 @@
-package me.krit.hychat.window;
+package me.krit.hychat.window
 
-import me.krit.hychat.server.chat.ChatContext;
-import me.krit.hychat.ui.HyChatFrame;
+import me.krit.hychat.ui.HyChatFrame
+import me.krit.hychat.server.chat.ChatContext
 
-import java.util.HashMap;
-
-public class WindowLayoutCoordinator
-{
-    private static final WindowLayoutCoordinator instance = new WindowLayoutCoordinator();
-    private HyChatFrame frame;
-
-    private WindowLayoutCoordinator()
-    {
-        frame = new HyChatFrame();
+class WindowLayoutCoordinator private constructor() {
+    val frame: HyChatFrame
+    fun createTabForChatContext(context: ChatContext) {
+        frame.createTabWithName(context.title)
     }
 
-    public static WindowLayoutCoordinator getInstance()
-    {
-        return instance;
+    fun displayLineFromContext(context: ChatContext, message: String) {
+        frame.addLineToTabWithName(context.title, """
+     $message
+     
+     """.trimIndent())
     }
 
-    public HyChatFrame getFrame()
-    {
-        return frame;
+    companion object {
+        @JvmStatic
+        val instance = WindowLayoutCoordinator()
     }
 
-    public void createTabForChatContext(ChatContext context)
-    {
-        frame.createTabWithName(context.title);
-    }
-
-    public void displayLineFromContext(ChatContext context, String message)
-    {
-        frame.addLineToTabWithName(context.title, message.concat("\n"));
+    init {
+        frame = HyChatFrame()
     }
 }

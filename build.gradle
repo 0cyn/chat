@@ -9,16 +9,12 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.1'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'kotlin'
 
-/*
-// for people who want stable - not yet functional for MC 1.8.8 - we require the forgegradle 2.1 snapshot
-plugins {
-    id "net.minecraftforge.gradle.forge" version "2.0.2"
-}
-*/
 version = "0.0.1"
 group = "me.krit" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "HyChat"
@@ -46,8 +42,7 @@ dependencies {
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
-    //compile "some.group:artifact:version"
-
+    //compile "some.group:artifact:version
     // real examples
     //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
@@ -60,7 +55,9 @@ dependencies {
     //deobfCompile 'com.mod-buildcraft:buildcraft:6.0.8:dev'
     //deobfProvided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
     shade fileTree(dir: 'libs', include: 'flatlaf-1.1.1.jar')
-
+    shade 'org.jetbrains.kotlin:kotlin-stdlib:1.0.1'
+    shade 'org.jetbrains.kotlin:kotlin-reflect:1.0.1'
+    shade fileTree(dir: 'libs', include: 'Forgelin-1.8.4.jar')
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
@@ -99,5 +96,17 @@ task copyCompiledMod(type: Copy) {
 
     outputs.upToDateWhen { false }
     from file("$buildDir/libs/$archivesBaseName-${version}.jar")
-    into file("${System.properties['user.home']}/curseforge/minecraft/Instances/Hypixel/mods")
+    into file("${System.properties['user.home']}/Library/ApplicationSupport/minecraft/mods")
+}
+repositories {
+    mavenCentral()
+}
+
+reobf {
+    jar {
+        // Kotlin+Adapter shading
+        extraLines += [ "PK: kotlin dev/phoenix/chat/repack/kotlin" ]
+        extraLines += [ "PK: org/jetbrains/annotations dev/phoenix/chat/repack/annotations" ]
+        extraLines += [ "PK: io/drakon/forge/kotlin dev/phoenix/chat/repack/adapter" ]
+    }
 }

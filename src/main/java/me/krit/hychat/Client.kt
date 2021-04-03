@@ -1,60 +1,43 @@
-package me.krit.hychat;
+package me.krit.hychat
 
-import me.krit.hychat.server.Hypixel;
-import me.krit.hychat.server.Server;
-import me.krit.hychat.window.WindowLayoutCoordinator;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.multiplayer.ServerData;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.client.entity.EntityPlayerSP
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import net.minecraftforge.event.entity.EntityJoinWorldEvent
+import net.minecraft.client.Minecraft
+import me.krit.hychat.server.Hypixel
+import me.krit.hychat.server.Server
+import net.minecraft.client.entity.EntityOtherPlayerMP
 
-public class Client
-{
-    public Server currentServer;
-    public EntityPlayerSP player;
-
-    private static final Client instance = new Client(null);
-
-    public Client(Server currentServer)
-    {
-        this.currentServer = currentServer;
+class Client(var currentServer: Server?) {
+    var player: EntityPlayerSP? = null
+    fun sendChat(string: String?) {
+        player!!.sendChatMessage(string)
     }
-
-    public static Client getInstance() {
-        return instance;
-    }
-
-    public void sendChat(String string)
-    {
-        player.sendChatMessage(string);
-    }
-
 
     @SubscribeEvent
-    public void entityJoinWorld(EntityJoinWorldEvent event)
-    {
-        if (event.entity instanceof EntityPlayerSP) {
-            if (currentServer != null)
-                return;
-            EntityPlayerSP player = (EntityPlayerSP) event.entity;
-            ServerData serverData = Minecraft.getMinecraft().getCurrentServerData();
-            if (serverData != null) {
-                System.out.println(String.format("Player joined server with ip <%s>", serverData.serverIP));
-                if (serverData.serverIP.contains("hypixel"))
-                    currentServer = new Hypixel(player, serverData);
-                else
-                    currentServer = new Server(player, serverData);
-            }
-            else
-            {
+    fun entityJoinWorld(event: EntityJoinWorldEvent) {
+        if (event.entity is EntityPlayerSP) {
+            if (currentServer != null) return  //TODO THIS PROPERLY
+            val player = event.entity as EntityPlayerSP
+            val serverData = Minecraft.getMinecraft().currentServerData
+            currentServer = if (serverData != null) {
+                println(String.format("Player joined server with ip <%s>", serverData.serverIP))
+                if (serverData.serverIP.contains("hypixel")) Hypixel(player, serverData) else Server(player, serverData)
+            } else {
+                return
+                // i dont know enough kotlin to make this work
+                // TODO someone who knows this language at a basic lvl pls fix
                 // player is on local server
-                currentServer = new Hypixel(player, null);
+                //Hypixel(player, null)
             }
-
-            this.player = player;
-
-            currentServer.configureChatClients();
+            this.player = player
+            currentServer!!.configureChatClients()
+        } else if (event.entity is EntityOtherPlayerMP) {
         }
+    }
+
+    companion object {
+        @JvmStatic
+        val instance = Client(null)
     }
 }

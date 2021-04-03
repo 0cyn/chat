@@ -1,7 +1,5 @@
-package me.krit.hychat.server.chat;
+package me.krit.hychat.server.chat
 
-public enum ChatType
-{
-    PUBLIC,
-    PRIVATE
+enum class ChatType {
+    PUBLIC, PRIVATE
 }
