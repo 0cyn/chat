@@ -16,8 +16,8 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'kotlin'
 
 version = "0.0.1"
-group = "me.krit" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "HyChat"
+group = "dev.phoenix"
+archivesBaseName = "Chat"
 
 project.sourceCompatibility = '1.8'
 project.targetCompatibility = '1.8'
@@ -57,7 +57,6 @@ dependencies {
     shade fileTree(dir: 'libs', include: 'flatlaf-1.1.1.jar')
     shade 'org.jetbrains.kotlin:kotlin-stdlib:1.0.1'
     shade 'org.jetbrains.kotlin:kotlin-reflect:1.0.1'
-    shade fileTree(dir: 'libs', include: 'Forgelin-1.8.4.jar')
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
@@ -96,7 +95,7 @@ task copyCompiledMod(type: Copy) {
 
     outputs.upToDateWhen { false }
     from file("$buildDir/libs/$archivesBaseName-${version}.jar")
-    into file("${System.properties['user.home']}/Library/ApplicationSupport/minecraft/mods")
+    into file("${System.properties['user.home']}/curseforge/minecraft/Instances/Hypixel/mods")
 }
 repositories {
     mavenCentral()
@@ -105,8 +104,8 @@ repositories {
 reobf {
     jar {
         // Kotlin+Adapter shading
-        extraLines += [ "PK: kotlin dev/phoenix/chat/repack/kotlin" ]
+        //extraLines += [ "PK: kotlin dev/phoenix/chat/repack/kotlin" ]
         extraLines += [ "PK: org/jetbrains/annotations dev/phoenix/chat/repack/annotations" ]
-        extraLines += [ "PK: io/drakon/forge/kotlin dev/phoenix/chat/repack/adapter" ]
+        //extraLines += [ "PK: io/drakon/forge/kotlin dev/phoenix/chat/repack/adapter" ]
     }
 }
