@@ -4,7 +4,7 @@ import dev.phoenix.chat.ui.ChatFrame
 import dev.phoenix.chat.server.chat.ChatContext
 
 class WindowLayoutCoordinator private constructor() {
-    val frame: ChatFrame
+    val frame: ChatFrame = ChatFrame()
     fun createTabForChatContext(context: ChatContext) {
         frame.createTabWithName(context.title)
     }
@@ -21,7 +21,4 @@ class WindowLayoutCoordinator private constructor() {
         val instance = WindowLayoutCoordinator()
     }
 
-    init {
-        frame = ChatFrame()
-    }
 }

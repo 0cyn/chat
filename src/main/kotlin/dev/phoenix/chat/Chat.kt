@@ -4,8 +4,6 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.common.MinecraftForge
 import dev.phoenix.chat.window.WindowLayoutCoordinator
-import dev.phoenix.chat.KotlinAdapter
-import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.fml.common.Mod
 
 @Mod(modid = "Chat", version = "1.0.0", acceptedMinecraftVersions = "[1.8,1.8.9]", modLanguage = "kotlin", modLanguageAdapter = "dev.phoenix.chat.KotlinAdapter")

@@ -6,11 +6,10 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent
 import net.minecraft.client.Minecraft
 import dev.phoenix.chat.server.Hypixel
 import dev.phoenix.chat.server.Server
-import dev.phoenix.chat.window.WindowLayoutCoordinator
 import net.minecraft.client.entity.EntityOtherPlayerMP
 import net.minecraftforge.fml.common.network.FMLNetworkEvent
 
-class Client() {
+class Client {
     var currentServer: Server? = null
     var player: EntityPlayerSP? = null
 
@@ -46,6 +45,7 @@ class Client() {
             this.player = player
             currentServer!!.configureChatClients()
         } else if (event.entity is EntityOtherPlayerMP) {
+            return
             // TODO player list
         }
     }

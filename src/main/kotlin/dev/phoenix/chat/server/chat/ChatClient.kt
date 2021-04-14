@@ -1,9 +1,7 @@
 package dev.phoenix.chat.server.chat
 
 import dev.phoenix.chat.Client
-import dev.phoenix.chat.server.chat.ChatContext
 import dev.phoenix.chat.window.WindowLayoutCoordinator
-import dev.phoenix.chat.server.chat.ChatType
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 
@@ -35,8 +33,7 @@ class ChatClient {
     }
 
     fun sendMessageToServer(message: String) {
-        var message = message
-        message = context.sendToContextCommand + message
-        Client.instance.sendChat(message)
+        val msg = context.sendToContextCommand + message
+        Client.instance.sendChat(msg)
     }
 }

@@ -1,6 +1,3 @@
-/*
- * Created by JFormDesigner on Wed Mar 31 12:44:35 CDT 2021
- */
 package dev.phoenix.chat.ui
 
 import javax.swing.text.html.HTMLEditorKit
@@ -43,13 +40,12 @@ class ChatFrame : JFrame() {
         setLocationRelativeTo(owner)
         preferredSize = Dimension(600, 400)
         setSize(600, 400)
-        // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
     fun destroyTabs() {
         while (tabbedPane.tabCount > 0)
         {
-            tabbedPane.remove(0);
+            tabbedPane.remove(0)
         }
         tabsByName = HashMap()
     }
@@ -62,7 +58,6 @@ class ChatFrame : JFrame() {
 
     fun addLineToTabWithName(name: String?, message: String) {
         //:vomit:
-        val st = StringTokenizer(message, "", false)
         val formatted = StringBuilder()
         var start = true
         var i = 0
@@ -162,7 +157,7 @@ class ChatFrame : JFrame() {
             c.weighty = 1.0
             c.anchor = GridBagConstraints.PAGE_START
             c.insets = Insets(10, 10, 0, 10)
-            add(scrollPane1, c)
+            add(scrollPane1!!, c)
             textArea1!!.maximumSize = Dimension(Int.MAX_VALUE,
                     30
             )
@@ -171,7 +166,7 @@ class ChatFrame : JFrame() {
             c.insets = Insets(10, 10, 10, 10)
             c.fill = GridBagConstraints.HORIZONTAL
             c.anchor = GridBagConstraints.PAGE_END
-            add(textArea1, c)
+            add(textArea1!!, c)
             val action: Action = object : AbstractAction() {
                 override fun actionPerformed(e: ActionEvent) {
                     val msg = textArea1!!.text
@@ -182,13 +177,11 @@ class ChatFrame : JFrame() {
             textArea1!!.addActionListener(action)
         }
 
-        // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-        // Generated using JFormDesigner Evaluation license - unknown
         private var scrollPane1: JScrollPane? = null
         private var chatEditorPane: JEditorPane? = null
         private var textArea1: JTextField? = null
         private var scrollPane2: JScrollPane? = null
-        private var memberEditorPane: JEditorPane? = null // JFormDesigner - End of variables declaration  //GEN-END:variables
+        private var memberEditorPane: JEditorPane? = null
 
         init {
             initComponents()

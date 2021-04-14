@@ -32,7 +32,7 @@ class KotlinAdapter : ILanguageAdapter {
         target.set(modObject, proxy)
     }
 
-    override fun getNewInstance(container: FMLModContainer?, objectClass: Class<*>, classLoader: ClassLoader, factoryMarkedAnnotation: Method?): Any? {
+    override fun getNewInstance(container: FMLModContainer?, objectClass: Class<*>, classLoader: ClassLoader, factoryMarkedAnnotation: Method?): Any {
         logger.debug("Constructing new instance of {}", objectClass.simpleName)
 
         val instanceField = findInstanceFieldOrThrow(objectClass)
