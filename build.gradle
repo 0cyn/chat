@@ -76,7 +76,7 @@ jar {
 task copyCompiledMod(type: Copy) {
 
     outputs.upToDateWhen { false }
-    from file("$buildDir/libs/$archivesBaseName\\.jar")
+    from file("$buildDir/libs/$archivesBaseName-${version}.jar")
     into file("${System.properties['user.home']}/curseforge/minecraft/Instances/Hypixel/mods")
 }
 repositories {
