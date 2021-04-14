@@ -4,6 +4,9 @@ Chat Popout with custom server integration
 ```
 TODO:
 -
+dms,
+tab closing functionality
+-
 kotlin shading is broken, see build.gradle line 85
 i just disabled the renaming. this is bad and basically relies on nobody else doing it wrong.
 -
