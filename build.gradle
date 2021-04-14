@@ -1,4 +1,4 @@
-// For those who want the bleeding edge
+
 buildscript {
     repositories {
         jcenter()
@@ -12,72 +12,54 @@ buildscript {
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.1'
     }
 }
+apply from: 'mod.gradle'
+
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'kotlin'
 
-version = "0.0.1"
+version = "0.0.2"
 group = "dev.phoenix"
 archivesBaseName = "Chat"
+fullName = "Phoenix Chat"
+modid = "chat"
 
 project.sourceCompatibility = '1.8'
 project.targetCompatibility = '1.8'
 
 minecraft {
+
     version = "1.8.9-11.15.1.1722"
     runDir = "run"
 
-    // the mappings can be changed at any time, and must be in the following format.
-    // snapshot_YYYYMMDD   snapshot are built nightly.
-    // stable_#            stables are built at the discretion of the MCP team.
-    // Use non-default mappings at your own risk. they may not allways work.
-    // simply re-run your setup task after changing the mappings to update your workspace.
     mappings = "stable_20"
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+
 }
+
 configurations {
     shade
     compile.extendsFrom shade
 }
+
 dependencies {
-    // you may put jars on which you depend on in ./libs
-    // or you may define them like so..
-    //compile "some.group:artifact:version:classifier"
-    //compile "some.group:artifact:version
-    // real examples
-    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
 
-    // the 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
-    //provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // the deobf configurations:  'deobfCompile' and 'deobfProvided' are the same as the normal compile and provided,
-    // except that these dependencies get remapped to your current MCP mappings
-    //deobfCompile 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-    //deobfProvided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-    shade fileTree(dir: 'libs', include: 'flatlaf-1.1.1.jar')
+    shade fileTree(include:['*.jar'], dir:"libs")
     shade 'org.jetbrains.kotlin:kotlin-stdlib:1.0.1'
     shade 'org.jetbrains.kotlin:kotlin-reflect:1.0.1'
-    // for more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
 }
 
 processResources
         {
-            // this will ensure that this task is redone when the versions change.
-            inputs.property "version", project.version
-            inputs.property "mcversion", project.minecraft.version
-
-            // replace stuff in mcmod.info, nothing else
+            inputs.property "version", version
+            inputs.property "mcversion", minecraft.version
+            inputs.property "modid", modid
+            inputs.property "name", fullName
             from(sourceSets.main.resources.srcDirs) {
                 include 'mcmod.info'
 
-                // replace version and mcversion
-                expand 'version': project.version, 'mcversion': project.minecraft.version
+                expand 'version': project.version, 'mcversion': project.minecraft.version, 'modid': project.modid, 'name': project.name
             }
 
-            // copy everything else, thats not the mcmod.info
             from(sourceSets.main.resources.srcDirs) {
                 exclude 'mcmod.info'
             }
@@ -94,7 +76,7 @@ jar {
 task copyCompiledMod(type: Copy) {
 
     outputs.upToDateWhen { false }
-    from file("$buildDir/libs/$archivesBaseName-${version}.jar")
+    from file("$buildDir/libs/$archivesBaseName\\.jar")
     into file("${System.properties['user.home']}/curseforge/minecraft/Instances/Hypixel/mods")
 }
 repositories {

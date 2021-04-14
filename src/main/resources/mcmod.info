@@ -1,16 +1,17 @@
 [
   {
-    "modid": "examplemod",
-    "name": "Example Mod",
-    "description": "Example placeholder mod.",
+    "modid": "{modid}",
+    "name": "{name}",
+    "description": "{description}",
     "version": "${version}",
     "mcversion": "${mcversion}",
     "url": "",
     "updateUrl": "",
     "authorList": [
-      "ExampleDude"
+      "Phoenix Mod Team",
+      "_kritanta"
     ],
-    "credits": "The Forge and FML guys, for making this example",
+    "credits": "Inspired by HypixelChatManager by skyerzz",
     "logoFile": "",
     "screenshots": [],
     "dependencies": []

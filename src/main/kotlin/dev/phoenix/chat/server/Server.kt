@@ -4,6 +4,7 @@ import dev.phoenix.chat.server.chat.ChatClient
 import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.client.multiplayer.ServerData
 import dev.phoenix.chat.server.chat.ChatType
+import dev.phoenix.chat.window.WindowLayoutCoordinator
 import net.minecraftforge.common.MinecraftForge
 import java.util.*
 
@@ -18,10 +19,21 @@ open class Server(protected var client: EntityPlayerSP, protected var server: Se
         registerChatClients()
     }
 
+    fun destroy() {
+        unregisterChatClients()
+        WindowLayoutCoordinator.instance.frame.destroyTabs();
+    }
+
     protected fun registerChatClients() {
         for (client in chatClients) {
             chatClientMap[client.context.title] = client
             MinecraftForge.EVENT_BUS.register(client)
+        }
+    }
+
+    fun unregisterChatClients() {
+        for (client in chatClients) {
+            MinecraftForge.EVENT_BUS.unregister(client)
         }
     }
 

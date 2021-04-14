@@ -20,7 +20,7 @@ import javax.swing.text.html.HTMLDocument
  * @author unknown
  */
 class ChatFrame : JFrame() {
-    private val tabsByName: MutableMap<String, Component> = HashMap()
+    private var tabsByName: MutableMap<String, Component> = HashMap()
     private fun initComponents() {
 
 
@@ -44,6 +44,14 @@ class ChatFrame : JFrame() {
         preferredSize = Dimension(600, 400)
         setSize(600, 400)
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
+    }
+
+    fun destroyTabs() {
+        while (tabbedPane.tabCount > 0)
+        {
+            tabbedPane.remove(0);
+        }
+        tabsByName = HashMap()
     }
 
     fun createTabWithName(name: String) {

@@ -1,0 +1,7 @@
+ext {
+    version = "0.0.2"
+    group = "dev.phoenix"
+    archivesBaseName = "Chat"
+    fullName = "Phoenix Chat"
+    modid = "chat"
+}

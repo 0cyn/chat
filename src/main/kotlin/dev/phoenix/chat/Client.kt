@@ -6,34 +6,47 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent
 import net.minecraft.client.Minecraft
 import dev.phoenix.chat.server.Hypixel
 import dev.phoenix.chat.server.Server
+import dev.phoenix.chat.window.WindowLayoutCoordinator
 import net.minecraft.client.entity.EntityOtherPlayerMP
+import net.minecraftforge.fml.common.network.FMLNetworkEvent
 
 class Client() {
     var currentServer: Server? = null
     var player: EntityPlayerSP? = null
+
     fun sendChat(string: String?) {
         player!!.sendChatMessage(string)
     }
 
     @SubscribeEvent
+    fun clientConnectedToServer(event: FMLNetworkEvent.ClientConnectedToServerEvent) {
+        // TODO improve
+        currentServer?.destroy()
+        currentServer = null
+        player = null
+    }
+
+    @SubscribeEvent
     fun entityJoinWorld(event: EntityJoinWorldEvent) {
         if (event.entity is EntityPlayerSP) {
-            if (currentServer != null) return  //TODO THIS PROPERLY
+
+            if (currentServer != null) return  // TODO can this be improved?
+
             val player = event.entity as EntityPlayerSP
             val serverData = Minecraft.getMinecraft().currentServerData
-            currentServer = if (serverData != null) {
+
+            currentServer = if (serverData != null) { // i hate this kind of syntax, difficult to read.
                 println(String.format("Player joined server with ip <%s>", serverData.serverIP))
                 if (serverData.serverIP.contains("hypixel")) Hypixel(player, serverData) else Server(player, serverData)
             } else {
                 return
-                // i dont know enough kotlin to make this work
-                // TODO someone who knows this language at a basic lvl pls fix
-                // player is on local server
-                //Hypixel(player, null)
+                // TODO set up some sort of local server chat UI
             }
+
             this.player = player
             currentServer!!.configureChatClients()
         } else if (event.entity is EntityOtherPlayerMP) {
+            // TODO player list
         }
     }
 
