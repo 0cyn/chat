@@ -30,6 +30,28 @@ class Hypixel(client: EntityPlayerSP, server: ServerData) : Server(client, serve
                 val withUser = message.replace("\\u00A7.".toRegex(), "").split(' ')[2].dropLast(1)
                 handleDM(withUser, message)
             }
+            if (message.replace("\\u00A7.".toRegex(), "").startsWith("Officer >"))
+            {
+                if (!chatClientMap.containsKey("Officer"))
+                {
+                    val newClient = ChatClient("Officer", "Officer >", ChatType.PUBLIC, "/oc ")
+                    chatClients.add(newClient)
+                    chatClientMap["Officer"] = newClient
+                    MinecraftForge.EVENT_BUS.register(newClient)
+                    chatClientMap["Officer"]?.handleChat(message)
+                }
+            }
+            if (message.replace("\\u00A7.".toRegex(), "").startsWith("Co-op >"))
+            {
+                if (!chatClientMap.containsKey("Co-op"))
+                {
+                    val newClient = ChatClient("Co-op", "Co-op >", ChatType.PUBLIC, "/cc ")
+                    chatClients.add(newClient)
+                    chatClientMap["Co-op"] = newClient
+                    MinecraftForge.EVENT_BUS.register(newClient)
+                    chatClientMap["Co-op"]?.handleChat(message)
+                }
+            }
         }
     }
 
