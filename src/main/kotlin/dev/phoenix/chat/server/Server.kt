@@ -11,6 +11,7 @@ import java.util.*
 open class Server(protected var client: EntityPlayerSP, protected var server: ServerData) {
     var chatClients = ArrayList<ChatClient>()
     var chatClientMap: MutableMap<String, ChatClient> = HashMap()
+
     open fun configureChatClients() {
         chatClients.add(ChatClient("Lobby", "", ChatType.PUBLIC, ""))
         if (client.name.contains("_kritanta")) {
@@ -21,7 +22,7 @@ open class Server(protected var client: EntityPlayerSP, protected var server: Se
 
     fun destroy() {
         unregisterChatClients()
-        WindowLayoutCoordinator.instance.frame.destroyTabs();
+        WindowLayoutCoordinator.instance.frame.destroyTabs()
     }
 
     protected fun registerChatClients() {

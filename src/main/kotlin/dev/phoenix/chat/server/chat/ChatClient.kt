@@ -24,8 +24,13 @@ class ChatClient {
     fun onChat(e: ClientChatReceivedEvent) {
         if (e.type.toInt() == 0) {
             val message = e.message.unformattedText
-            if (context.messageQualifiesForContext(message.replace("\\u00A7.".toRegex(), ""))) displayLineInRelavantTab(message)
+            handleChat(message)
         }
+    }
+
+    fun handleChat(message: String)
+    {
+        if (context.messageQualifiesForContext(message.replace("\\u00A7.".toRegex(), ""))) displayLineInRelavantTab(message)
     }
 
     fun displayLineInRelavantTab(message: String) {

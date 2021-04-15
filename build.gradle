@@ -4,7 +4,7 @@ buildscript {
         jcenter()
         maven {
             name = "forge"
-            url = "http://files.minecraftforge.net/maven"
+            url = "https://files.minecraftforge.net/maven"
         }
     }
     dependencies {
@@ -17,7 +17,7 @@ apply from: 'mod.gradle'
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'kotlin'
 
-version = "0.0.2"
+version = "0.1.0"
 group = "dev.phoenix"
 archivesBaseName = "Chat"
 fullName = "Phoenix Chat"
@@ -87,7 +87,6 @@ reobf {
     jar {
         // Kotlin+Adapter shading
         //extraLines += [ "PK: kotlin dev/phoenix/chat/repack/kotlin" ]
-        extraLines += [ "PK: org/jetbrains/annotations dev/phoenix/chat/repack/annotations" ]
-        //extraLines += [ "PK: io/drakon/forge/kotlin dev/phoenix/chat/repack/adapter" ]
+        //extraLines += [ "PK: org/jetbrains/annotations dev/phoenix/chat/repack/annotations" ]
     }
 }
