@@ -32,7 +32,7 @@ open class Server(protected var client: EntityPlayerSP, protected var server: Se
         }
     }
 
-    fun unregisterChatClients() {
+    open fun unregisterChatClients() {
         for (client in chatClients) {
             MinecraftForge.EVENT_BUS.unregister(client)
         }

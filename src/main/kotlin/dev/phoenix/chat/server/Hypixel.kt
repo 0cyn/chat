@@ -24,6 +24,11 @@ class Hypixel(client: EntityPlayerSP, server: ServerData) : Server(client, serve
         MinecraftForge.EVENT_BUS.register(this)
     }
 
+    override fun unregisterChatClients()
+    {
+        MinecraftForge.EVENT_BUS.unregister(this)
+    }
+
     @SubscribeEvent
     fun onChat(e: ClientChatReceivedEvent) {
         if (e.type.toInt() == 0) {
