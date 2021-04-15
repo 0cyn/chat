@@ -106,6 +106,7 @@ class ChatFrame : JFrame() {
             formatted.append("</span>")
         }
         val tab = tabsByName[name] as TabPanel?
+        formatted.append("</span>")
         tab!!.appendToChatPane(formatted.toString())
     }
 
