@@ -7,9 +7,11 @@ class ChatContext(var title: String, var chatPrefix: String, var type: ChatType,
         if (type == ChatType.PRIVATE)
         {
             // TODO: this is a non-portable hack for hypixel
+            // TODO: nons
+            // From rank playername:
             if (message.startsWith("To ") || message.startsWith("From "))
             {
-                return true
+                return message.replace("\\u00A7.".toRegex(), "").split(' ')[2].dropLast(1) == title
             }
         }
 

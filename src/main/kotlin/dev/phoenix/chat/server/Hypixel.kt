@@ -27,6 +27,7 @@ class Hypixel(client: EntityPlayerSP, server: ServerData) : Server(client, serve
             val message = e.message.unformattedText
             if (message.replace("\\u00A7.".toRegex(), "").startsWith("To ") || message.replace("\\u00A7.".toRegex(), "").startsWith("From "))
             {
+                // TODO: nons
                 val withUser = message.replace("\\u00A7.".toRegex(), "").split(' ')[2].dropLast(1)
                 if (withUser == "Be") // "To leave Bed Wars, type /lobby"
                     return
