@@ -17,7 +17,7 @@ apply from: 'mod.gradle'
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'kotlin'
 
-version = "0.1.1"
+version = "0.2.0"
 group = "dev.phoenix"
 archivesBaseName = "Chat"
 fullName = "Phoenix Chat"

@@ -28,13 +28,14 @@ class Hypixel(client: EntityPlayerSP, server: ServerData) : Server(client, serve
     fun onChat(e: ClientChatReceivedEvent) {
         if (e.type.toInt() == 0) {
             val message = e.message.unformattedText
+            val formattedMessage = e.message.formattedText
             if (message.replace("\\u00A7.".toRegex(), "").startsWith("To ") || message.replace("\\u00A7.".toRegex(), "").startsWith("From "))
             {
                 // TODO: nons
                 val withUser = message.replace("\\u00A7.".toRegex(), "").split(' ')[2].dropLast(1)
                 if (withUser == "Be") // "To leave Bed Wars, type /lobby"
                     return
-                handleDM(withUser, message)
+                handleDM(withUser, formattedMessage)
             }
             else
             {
@@ -42,13 +43,14 @@ class Hypixel(client: EntityPlayerSP, server: ServerData) : Server(client, serve
                 {
                     if (client.type == ChatType.PUBLIC && client.shouldHandleChat(e)) // already got dms, lobby == catchall
                     {
-                        WindowLayoutCoordinator.instance.displayLineFromContext(client.context, message)
+                        WindowLayoutCoordinator.instance.displayLineFromContext(client.context, formattedMessage)
                         return
                     }
                 }
                 // if we've made it this far, the message qualified for no other chat clients
                 // TODO: hypixel specific lobby based filtering somewhere in this class.
-                WindowLayoutCoordinator.instance.displayLineFromContext(lobbyClient.context, message)
+                WindowLayoutCoordinator.instance.displayLineFromContext(lobbyClient.context, formattedMessage)
+
             }
         }
     }
