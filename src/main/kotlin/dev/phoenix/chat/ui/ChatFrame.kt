@@ -43,7 +43,7 @@ class ChatFrame : JFrame() {
             
 
         val formatted = StringBuilder() // This is the final string we'll be adding
-        var start = true                // If this stays true, we didn't hit a format string
+        var didntFindColorCode = true                // If this stays true, we didn't hit a format string
         var i = 0                       // character index in original string
         var skip = false                // When this flips to true, we don't process the next character in the string.
                                         //      (when we already processed it bc it was a color code)
@@ -52,8 +52,8 @@ class ChatFrame : JFrame() {
         for (token in message.toCharArray()) {
             if (token == '\u00A7') { // "Section Symbol", denotes a color code in vanilla minecraft.
 
-                if (start) 
-                    start = false // We've hit a color code, so permanently set 'start' to false
+                if (didntFindColorCode) 
+                    didntFindColorCode = false // We've hit a color code, so permanently set 'didntFindColorCode' to false
                 else 
                     formatted.append("</span>") // This color code will override the last, so end the last section here.
                                                 //      if this is our first color code, we dont add this.
@@ -97,7 +97,7 @@ class ChatFrame : JFrame() {
             i++
         }
 
-        if (!start) // make sure we close things up.
+        if (!didntFindColorCode) // make sure we close things up.
             formatted.append("</span>")
         
         // add the string now.
