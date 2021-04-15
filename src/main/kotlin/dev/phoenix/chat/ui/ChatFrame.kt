@@ -58,6 +58,12 @@ class ChatFrame : JFrame() {
 
     fun addLineToTabWithName(name: String?, message: String) {
         //:vomit:
+        if (!tabsByName.containsKey(name))
+        {
+            if (name != null) {
+                createTabWithName(name)
+            }
+        }
         val formatted = StringBuilder()
         var start = true
         var i = 0

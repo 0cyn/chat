@@ -9,11 +9,12 @@ import net.minecraftforge.common.MinecraftForge
 import java.util.*
 
 open class Server(protected var client: EntityPlayerSP, protected var server: ServerData) {
+    var lobbyClient: ChatClient = ChatClient("Lobby", "", ChatType.LOBBY, "")
     var chatClients = ArrayList<ChatClient>()
     var chatClientMap: MutableMap<String, ChatClient> = HashMap()
 
     open fun configureChatClients() {
-        chatClients.add(ChatClient("Lobby", "", ChatType.PUBLIC, ""))
+        chatClients.add(lobbyClient)
         if (client.name.contains("_kritanta")) {
             chatClients.add(ChatClient("Debug", "", ChatType.PUBLIC, ""))
         }
@@ -28,7 +29,6 @@ open class Server(protected var client: EntityPlayerSP, protected var server: Se
     protected fun registerChatClients() {
         for (client in chatClients) {
             chatClientMap[client.context.title] = client
-            MinecraftForge.EVENT_BUS.register(client)
         }
     }
 

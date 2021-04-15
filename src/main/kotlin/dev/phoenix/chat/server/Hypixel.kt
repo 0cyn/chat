@@ -4,15 +4,18 @@ import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.client.multiplayer.ServerData
 import dev.phoenix.chat.server.chat.ChatClient
 import dev.phoenix.chat.server.chat.ChatType
+import dev.phoenix.chat.window.WindowLayoutCoordinator
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 class Hypixel(client: EntityPlayerSP, server: ServerData) : Server(client, server) {
     override fun configureChatClients() {
-        chatClients.add(ChatClient("Lobby", "[", ChatType.PUBLIC, "/achat "))
+        chatClients.add(ChatClient("Lobby", "[", ChatType.LOBBY, "/achat "))
         chatClients.add(ChatClient("Guild", "Guild >", ChatType.PUBLIC, "/gchat "))
         chatClients.add(ChatClient("Party", "Party >", ChatType.PUBLIC, "/pchat "))
+        chatClients.add(ChatClient("Officer", "Officer >", ChatType.PUBLIC, "/oc "))
+        chatClients.add(ChatClient("Co-op", "Co-op >", ChatType.PUBLIC, "/cc "))
         if (client.name.contains("_kritanta")) {
             chatClients.add(ChatClient("Debug", "/dontusethis", ChatType.PUBLIC, "/dontusethis"))
         }
@@ -33,27 +36,19 @@ class Hypixel(client: EntityPlayerSP, server: ServerData) : Server(client, serve
                     return
                 handleDM(withUser, message)
             }
-            if (message.replace("\\u00A7.".toRegex(), "").startsWith("Officer >"))
+            else
             {
-                if (!chatClientMap.containsKey("Officer"))
+                for (client in chatClients)
                 {
-                    val newClient = ChatClient("Officer", "Officer >", ChatType.PUBLIC, "/oc ")
-                    chatClients.add(newClient)
-                    chatClientMap["Officer"] = newClient
-                    MinecraftForge.EVENT_BUS.register(newClient)
-                    chatClientMap["Officer"]?.handleChat(message)
+                    if (client.type == ChatType.PUBLIC && client.shouldHandleChat(e)) // already got dms, lobby == catchall
+                    {
+                        WindowLayoutCoordinator.instance.displayLineFromContext(client.context, message)
+                        return
+                    }
                 }
-            }
-            if (message.replace("\\u00A7.".toRegex(), "").startsWith("Co-op >"))
-            {
-                if (!chatClientMap.containsKey("Co-op"))
-                {
-                    val newClient = ChatClient("Co-op", "Co-op >", ChatType.PUBLIC, "/cc ")
-                    chatClients.add(newClient)
-                    chatClientMap["Co-op"] = newClient
-                    MinecraftForge.EVENT_BUS.register(newClient)
-                    chatClientMap["Co-op"]?.handleChat(message)
-                }
+                // if we've made it this far, the message qualified for no other chat clients
+                // TODO: hypixel specific lobby based filtering somewhere in this class.
+                WindowLayoutCoordinator.instance.displayLineFromContext(lobbyClient.context, message)
             }
         }
     }
@@ -65,8 +60,7 @@ class Hypixel(client: EntityPlayerSP, server: ServerData) : Server(client, serve
             val newChatClient = ChatClient(with, "From ", ChatType.PRIVATE, "/msg $with ")
             chatClients.add(newChatClient)
             chatClientMap[with] = newChatClient
-            MinecraftForge.EVENT_BUS.register(newChatClient)
-            chatClientMap[with]?.handleChat(message)
+            chatClientMap[with]?.let { WindowLayoutCoordinator.instance.displayLineFromContext(it.context, message) }
         }
     }
 }
