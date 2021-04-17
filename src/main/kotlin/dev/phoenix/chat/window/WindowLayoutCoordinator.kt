@@ -3,7 +3,8 @@ package dev.phoenix.chat.window
 import dev.phoenix.chat.ui.ChatFrame
 import dev.phoenix.chat.server.chat.ChatContext
 
-class WindowLayoutCoordinator private constructor() {
+object WindowLayoutCoordinator {
+
     val frame: ChatFrame = ChatFrame()
     fun createTabForChatContext(context: ChatContext) {
         frame.createTabWithName(context.title)
@@ -14,11 +15,6 @@ class WindowLayoutCoordinator private constructor() {
      $message
      
      """.trimIndent())
-    }
-
-    companion object {
-        @JvmStatic
-        val instance = WindowLayoutCoordinator()
     }
 
 }

@@ -15,8 +15,8 @@ object Chat {
     @Mod.EventHandler
     fun init(event: FMLInitializationEvent?) {
         MinecraftForge.EVENT_BUS.register(this)
-        MinecraftForge.EVENT_BUS.register(Client.instance)
-        MinecraftForge.EVENT_BUS.register(WindowLayoutCoordinator.instance.frame)
+        MinecraftForge.EVENT_BUS.register(Client)
+        MinecraftForge.EVENT_BUS.register(WindowLayoutCoordinator.frame)
     }
 
 }

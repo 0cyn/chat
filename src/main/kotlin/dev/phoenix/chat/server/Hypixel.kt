@@ -48,13 +48,13 @@ class Hypixel(client: EntityPlayerSP, server: ServerData) : Server(client, serve
                 {
                     if (client.type == ChatType.PUBLIC && client.shouldHandleChat(e)) // already got dms, lobby == catchall
                     {
-                        WindowLayoutCoordinator.instance.displayLineFromContext(client.context, formattedMessage)
+                        WindowLayoutCoordinator.displayLineFromContext(client.context, formattedMessage)
                         return
                     }
                 }
                 // if we've made it this far, the message qualified for no other chat clients
                 // TODO: hypixel specific lobby based filtering somewhere in this class.
-                WindowLayoutCoordinator.instance.displayLineFromContext(lobbyClient.context, formattedMessage)
+                WindowLayoutCoordinator.displayLineFromContext(lobbyClient.context, formattedMessage)
 
             }
         }
@@ -67,7 +67,7 @@ class Hypixel(client: EntityPlayerSP, server: ServerData) : Server(client, serve
             val newChatClient = ChatClient(with, "From ", ChatType.PRIVATE, "/msg $with ")
             chatClients.add(newChatClient)
             chatClientMap[with] = newChatClient
-            chatClientMap[with]?.let { WindowLayoutCoordinator.instance.displayLineFromContext(it.context, message) }
+            chatClientMap[with]?.let { WindowLayoutCoordinator.displayLineFromContext(it.context, message) }
         }
     }
 }

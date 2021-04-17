@@ -1,23 +1,26 @@
 package dev.phoenix.chat.ui
 
-import javax.swing.text.html.HTMLEditorKit
-import javax.swing.text.BadLocationException
-import java.io.IOException
-import javax.swing.text.DefaultCaret
 import com.formdev.flatlaf.FlatDarkLaf
 import dev.phoenix.chat.Client
+import dev.phoenix.chat.ui.TabCloseCallbackHolder.*
 import java.awt.*
 import java.awt.event.ActionEvent
 import java.awt.image.BufferedImage
+import java.io.IOException
 import java.util.*
+import java.util.function.BiConsumer
+import java.util.function.IntConsumer
 import javax.swing.*
+import javax.swing.text.BadLocationException
+import javax.swing.text.DefaultCaret
 import javax.swing.text.html.HTMLDocument
+import javax.swing.text.html.HTMLEditorKit
 
 /**
  * @author unknown
  */
 class ChatFrame : JFrame() {
-    private var tabsByName: MutableMap<String, Component> = HashMap()
+    var tabsByName: MutableMap<String, Component> = HashMap()
 
     fun destroyTabs() {
         while (tabbedPane.tabCount > 0)
@@ -129,9 +132,15 @@ class ChatFrame : JFrame() {
         setLocationRelativeTo(owner)
         preferredSize = Dimension(600, 400)
         setSize(600, 400)
+
+        tabbedPane.putClientProperty("JTabbedPane.tabClosable", true)
+
+        tabbedPane.putClientProperty( "JTabbedPane.tabCloseCallback",
+            consumer
+        )
     }
 
-    private val tabbedPane = JTabbedPane()
+    val tabbedPane = JTabbedPane()
 
     private inner class TabPanel(private val contextName: String) : JPanel() {
         fun appendToChatPane(string: String?) {
@@ -198,7 +207,7 @@ class ChatFrame : JFrame() {
             val action: Action = object : AbstractAction() {
                 override fun actionPerformed(e: ActionEvent) {
                     val msg = textArea1!!.text
-                    Client.instance.currentServer?.sendChatFromTab((textArea1!!.parent as TabPanel).contextName, msg)
+                    Client.currentServer?.sendChatFromTab((textArea1!!.parent as TabPanel).contextName, msg)
                     textArea1!!.text = ""
                 }
             }

@@ -12,10 +12,17 @@ buildscript {
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.1'
     }
 }
+
+
 apply from: 'mod.gradle'
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'kotlin'
+
+
+sourceSets {
+    main.java.srcDirs = ['src/main/kotlin']
+}
 
 version = "0.2.1"
 group = "dev.phoenix"

@@ -9,7 +9,7 @@ import dev.phoenix.chat.server.Server
 import net.minecraft.client.entity.EntityOtherPlayerMP
 import net.minecraftforge.fml.common.network.FMLNetworkEvent
 
-class Client {
+object Client {
     var currentServer: Server? = null
     var player: EntityPlayerSP? = null
 
@@ -48,10 +48,5 @@ class Client {
             return
             // TODO player list
         }
-    }
-
-    companion object {
-        @JvmStatic
-        val instance = Client()
     }
 }

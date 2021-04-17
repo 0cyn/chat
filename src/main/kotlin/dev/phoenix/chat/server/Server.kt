@@ -23,7 +23,7 @@ open class Server(protected var client: EntityPlayerSP, protected var server: Se
 
     fun destroy() {
         unregisterChatClients()
-        WindowLayoutCoordinator.instance.frame.destroyTabs()
+        WindowLayoutCoordinator.frame.destroyTabs()
     }
 
     protected fun registerChatClients() {
