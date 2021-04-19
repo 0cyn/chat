@@ -1,5 +1,8 @@
 package dev.phoenix.chat.server.chat
 
+/**
+ * Holds specific info for a Chat Client
+ */
 class ChatContext(var title: String, var chatPrefix: String, var type: ChatType, var sendToContextCommand: String) {
     fun messageQualifiesForContext(message: String): Boolean {
 

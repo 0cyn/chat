@@ -10,6 +10,9 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
+/**
+ * Hypixel Server implementation.
+ */
 class Hypixel(client: EntityPlayerSP, server: ServerData) : Server(client, server) {
     override fun configureChatClients() {
         // "Lobby" is for *users* sending chat messages

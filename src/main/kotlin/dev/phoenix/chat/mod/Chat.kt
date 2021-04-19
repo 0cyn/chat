@@ -8,6 +8,9 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 
+/**
+ * Mod object and global generic object we can reference
+ */
 @Mod(modid = "Chat", version = "1.0.0", acceptedMinecraftVersions = "[1.8,1.8.9]", modLanguage = "kotlin", modLanguageAdapter = "dev.phoenix.chat.mod.KotlinAdapter")
 object Chat {
 

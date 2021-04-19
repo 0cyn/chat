@@ -18,6 +18,9 @@ import javax.swing.text.DefaultCaret
 import javax.swing.text.html.HTMLDocument
 import javax.swing.text.html.HTMLEditorKit
 
+/**
+ * Individual tab class.
+ */
 class TabPanel(private val contextName: String) : JPanel() {
     fun appendToChatPane(string: String?) {
         val doc = chatEditorPane!!.document as HTMLDocument

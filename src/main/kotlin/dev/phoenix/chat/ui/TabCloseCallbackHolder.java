@@ -5,6 +5,12 @@ import dev.phoenix.chat.window.WindowLayoutCoordinator;
 import javax.swing.*;
 import java.util.function.BiConsumer;
 
+
+/** 
+ * We have to have this file because FlatLAF expects either an IntConsumer
+ *  or a BiConsumer, and I can't seem to find a way to create that in Kotlin.
+*/
+
 public class TabCloseCallbackHolder
 {
     public static BiConsumer<JTabbedPane, Integer> consumer =

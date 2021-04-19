@@ -8,6 +8,9 @@ import dev.phoenix.chat.window.WindowLayoutCoordinator
 import net.minecraftforge.common.MinecraftForge
 import java.util.*
 
+/**
+ * Base server class
+ */
 open class Server(protected var client: EntityPlayerSP, protected var server: ServerData) {
     var lobbyClient: ChatClient = ChatClient("Lobby", "", ChatType.LOBBY, "")
     var gameClient: ChatClient = ChatClient("Game", "", ChatType.GAME, "")

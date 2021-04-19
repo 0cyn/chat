@@ -7,6 +7,13 @@ import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import java.awt.event.MouseMotionAdapter
 
+/**
+ * This hasn't been implemented yet
+ * 
+ * Since we can't tweak the title bar, I'd like to just use borderless
+ * 
+ * This class will allow it to be draggable without a title bar
+ */
 class MotionPanel(private val parent: JFrame) : JPanel() {
     private var initialClick: Point? = null
 

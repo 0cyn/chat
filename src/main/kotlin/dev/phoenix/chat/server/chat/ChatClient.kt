@@ -6,6 +6,11 @@ import dev.phoenix.chat.server.chat.ChatContext
 import dev.phoenix.chat.window.WindowLayoutCoordinator
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
+/**
+ * Represents a channel (tab) of chat.
+ * 
+ * Handles checking incoming messages and sending outbound messages in a specific channel
+ */
 class ChatClient(title: String, private val chatPrefix: String, var type: ChatType, sendToContextCommand: String) {
     var context: ChatContext = ChatContext(title, chatPrefix, type, sendToContextCommand)
 

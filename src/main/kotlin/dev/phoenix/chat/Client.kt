@@ -9,6 +9,11 @@ import dev.phoenix.chat.server.Server
 import net.minecraft.client.entity.EntityOtherPlayerMP
 import net.minecraftforge.fml.common.network.FMLNetworkEvent
 
+/**
+ * This represents the local minecraft client. 
+ * 
+ * It abstracts out interactions at the forge/network level, processes some events, and stores current player/server objects
+ */
 object Client {
     var currentServer: Server? = null
     var player: EntityPlayerSP? = null

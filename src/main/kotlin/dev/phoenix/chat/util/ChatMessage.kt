@@ -2,6 +2,9 @@ package dev.phoenix.chat.util
 
 import net.minecraft.util.text.ITextComponent
 
+/**
+ * Abstracts the ITextComponent and performs some formatting on it
+ */
 class ChatMessage(val message: ITextComponent) {
     val plaintext: String? = message.unformattedText.replace("\\u00A7.".toRegex(), "")
     val formatted: String? = message.formattedText 

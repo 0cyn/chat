@@ -3,6 +3,11 @@ package dev.phoenix.chat.window
 import dev.phoenix.chat.ui.ChatFrame
 import dev.phoenix.chat.server.chat.ChatContext
 
+/**
+ * General shared window layout coordinator object
+ * 
+ * This should handle a lot of layout stuff (move more things here)
+ */
 object WindowLayoutCoordinator {
 
     val frame: ChatFrame = ChatFrame()

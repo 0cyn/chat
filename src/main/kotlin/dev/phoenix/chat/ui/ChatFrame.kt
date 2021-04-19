@@ -20,9 +20,6 @@ import javax.swing.text.html.HTMLEditorKit
 
 /**
  * @author _kritanta
- * TODO: Refactor Everything
- * 
- * This is by far the messiest, worst class(es) in the project. It's already scary to touch in certain parts.
  */
 class ChatFrame : JFrame() {
     var tabsByName: MutableMap<String, Component> = HashMap()
