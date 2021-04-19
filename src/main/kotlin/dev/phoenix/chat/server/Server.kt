@@ -10,6 +10,7 @@ import java.util.*
 
 open class Server(protected var client: EntityPlayerSP, protected var server: ServerData) {
     var lobbyClient: ChatClient = ChatClient("Lobby", "", ChatType.LOBBY, "")
+    var gameClient: ChatClient = ChatClient("Game", "", ChatType.GAME, "")
     var chatClients = ArrayList<ChatClient>()
     var chatClientMap: MutableMap<String, ChatClient> = HashMap()
 
@@ -30,6 +31,8 @@ open class Server(protected var client: EntityPlayerSP, protected var server: Se
         for (client in chatClients) {
             chatClientMap[client.context.title] = client
         }
+        WindowLayoutCoordinator.displayLineFromContext(lobbyClient.context, "Phoenix Chat Manager")
+        WindowLayoutCoordinator.displayLineFromContext(lobbyClient.context, "written by _kritanta")
     }
 
     open fun unregisterChatClients() {

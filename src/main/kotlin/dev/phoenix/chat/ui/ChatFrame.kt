@@ -11,13 +11,15 @@ import java.util.*
 import java.util.function.BiConsumer
 import java.util.function.IntConsumer
 import javax.swing.*
+import javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER
 import javax.swing.text.BadLocationException
 import javax.swing.text.DefaultCaret
 import javax.swing.text.html.HTMLDocument
 import javax.swing.text.html.HTMLEditorKit
 
 /**
- * @author unknown
+ * @author _kritanta
+ * TODO: Refactor Everything
  */
 class ChatFrame : JFrame() {
     var tabsByName: MutableMap<String, Component> = HashMap()
@@ -138,6 +140,11 @@ class ChatFrame : JFrame() {
         tabbedPane.putClientProperty( "JTabbedPane.tabCloseCallback",
             consumer
         )
+
+        var toolbar = JToolBar()
+        var options = JMenu("Options")
+        var filter = JMenu("Filter")
+
     }
 
     val tabbedPane = JTabbedPane()
@@ -162,6 +169,8 @@ class ChatFrame : JFrame() {
             textArea1 = JTextField()
             scrollPane2 = JScrollPane()
             memberEditorPane = JEditorPane()
+            scrollPane1!!.horizontalScrollBarPolicy = HORIZONTAL_SCROLLBAR_NEVER
+            scrollPane2!!.horizontalScrollBarPolicy = HORIZONTAL_SCROLLBAR_NEVER
 
             //======== this ========
 

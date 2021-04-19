@@ -19,12 +19,12 @@ apply from: 'mod.gradle'
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'kotlin'
 
-
+// this ensures any .java files also get built when in the src/main/kotlin dir
 sourceSets {
     main.java.srcDirs = ['src/main/kotlin']
 }
 
-version = "0.2.1"
+version = "0.4.0"
 group = "dev.phoenix"
 archivesBaseName = "Chat"
 fullName = "Phoenix Chat"

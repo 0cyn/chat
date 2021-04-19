@@ -1,4 +1,4 @@
-package dev.phoenix.chat
+package dev.phoenix.chat.mod
 
 import net.minecraftforge.fml.common.ILanguageAdapter
 import net.minecraftforge.fml.common.FMLModContainer

@@ -11,7 +11,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 class Hypixel(client: EntityPlayerSP, server: ServerData) : Server(client, server) {
     override fun configureChatClients() {
-        chatClients.add(ChatClient("Lobby", "[", ChatType.LOBBY, "/achat "))
+        chatClients.add(ChatClient("Lobby", "", ChatType.LOBBY, "/achat "))
+        lobbyClient = chatClients[0]
+        chatClients.add(ChatClient("Game", "", ChatType.GAME, "/achat "))
+        gameClient = chatClients[1]
         chatClients.add(ChatClient("Guild", "Guild >", ChatType.PUBLIC, "/gchat "))
         chatClients.add(ChatClient("Party", "Party >", ChatType.PUBLIC, "/pchat "))
         chatClients.add(ChatClient("Officer", "Officer >", ChatType.PUBLIC, "/oc "))
@@ -19,6 +22,7 @@ class Hypixel(client: EntityPlayerSP, server: ServerData) : Server(client, serve
         if (client.name.contains("_kritanta")) {
             chatClients.add(ChatClient("Debug", "/dontusethis", ChatType.PUBLIC, "/dontusethis"))
         }
+
         registerChatClients()
 
         MinecraftForge.EVENT_BUS.register(this)
@@ -46,15 +50,17 @@ class Hypixel(client: EntityPlayerSP, server: ServerData) : Server(client, serve
             {
                 for (client in chatClients)
                 {
-                    if (client.type == ChatType.PUBLIC && client.shouldHandleChat(e)) // already got dms, lobby == catchall
+                    if (client.type == ChatType.PUBLIC && client.shouldHandleChat(e)) // already got dms, game == catchall
                     {
-                        WindowLayoutCoordinator.displayLineFromContext(client.context, formattedMessage)
+                        WindowLayoutCoordinator.displayLineFromContext(client.context, client.removePrefix(formattedMessage))
                         return
                     }
                 }
                 // if we've made it this far, the message qualified for no other chat clients
-                // TODO: hypixel specific lobby based filtering somewhere in this class.
-                WindowLayoutCoordinator.displayLineFromContext(lobbyClient.context, formattedMessage)
+                if (message.replace("\\u00A7.".toRegex(), "").contains(": "))
+                    WindowLayoutCoordinator.displayLineFromContext(lobbyClient.context, formattedMessage)
+                else
+                    WindowLayoutCoordinator.displayLineFromContext(gameClient.context, formattedMessage)
 
             }
         }

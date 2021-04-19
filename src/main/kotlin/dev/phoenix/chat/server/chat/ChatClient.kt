@@ -6,7 +6,7 @@ import dev.phoenix.chat.window.WindowLayoutCoordinator
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 
-class ChatClient(title: String, chatPrefix: String, var type: ChatType, sendToContextCommand: String) {
+class ChatClient(title: String, private val chatPrefix: String, var type: ChatType, sendToContextCommand: String) {
     var context: ChatContext = ChatContext(title, chatPrefix, type, sendToContextCommand)
 
 
@@ -20,6 +20,14 @@ class ChatClient(title: String, chatPrefix: String, var type: ChatType, sendToCo
             return context.messageQualifiesForContext(message.replace("\\u00A7.".toRegex(), ""))
         }
         return false
+    }
+
+    fun removePrefix(message: String): String {
+        if (type == ChatType.PUBLIC)
+            return message.replaceFirst(chatPrefix, "")
+        else if (type == ChatType.PRIVATE)
+            return message.replaceFirst("To ", "").replaceFirst("From ", "")
+        return message
     }
 
     fun sendMessageToServer(message: String) {
