@@ -30,6 +30,12 @@ object Chat {
         config!!.save()
     }
 
+    fun logDebug(msg: String?) {
+        if (!Client.currentServer.chatClients.containsKey("Debug"))
+            return;
+        WindowLayoutCoordinator.displayLineFromContext(Client.currentServer.chatClients["Debug"].context, msg)
+    }
+
 
     @Mod.EventHandler
     fun init(event: FMLInitializationEvent?) {

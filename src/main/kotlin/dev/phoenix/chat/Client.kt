@@ -34,7 +34,7 @@ object Client {
             val serverData = Minecraft.getMinecraft().currentServerData
 
             currentServer = if (serverData != null) { 
-                println(String.format("Player joined server with ip <%s>", serverData.serverIP))
+                Chat.logDebug(String.format("Player joined server with ip <%s>", serverData.serverIP))
                 if (serverData.serverIP.contains("hypixel")) Hypixel(player, serverData) else Server(player, serverData)
             } else {
                 return
