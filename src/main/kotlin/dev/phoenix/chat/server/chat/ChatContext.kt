@@ -10,7 +10,7 @@ class ChatContext(var title: String, var chatPrefix: String, var type: ChatType,
             // From rank playername:
             if (message.startsWith("To ") || message.startsWith("From "))
             {
-                return message.replace("\\u00A7.".toRegex(), "").split(' ')[2].dropLast(1) == title
+                return message.split(' ')[2].dropLast(1) == title
             }
         }
 

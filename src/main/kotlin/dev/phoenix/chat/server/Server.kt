@@ -15,6 +15,7 @@ open class Server(protected var client: EntityPlayerSP, protected var server: Se
     var chatClientMap: MutableMap<String, ChatClient> = HashMap()
 
     open fun configureChatClients() {
+        // TODO: this whole thing isn't functional on any server other than hypixel rn, need to fix before upload.
         chatClients.add(lobbyClient)
         if (client.name.contains("_kritanta")) {
             chatClients.add(ChatClient("Debug", "", ChatType.PUBLIC, ""))

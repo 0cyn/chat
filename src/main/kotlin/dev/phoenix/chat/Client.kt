@@ -19,7 +19,6 @@ object Client {
 
     @SubscribeEvent
     fun clientConnectedToServer(event: FMLNetworkEvent.ClientConnectedToServerEvent) {
-        // TODO improve
         currentServer?.destroy()
         currentServer = null
         player = null
@@ -29,12 +28,12 @@ object Client {
     fun entityJoinWorld(event: EntityJoinWorldEvent) {
         if (event.entity is EntityPlayerSP) {
 
-            if (currentServer != null) return  // TODO can this be improved?
+            if (currentServer != null) return
 
             val player = event.entity as EntityPlayerSP
             val serverData = Minecraft.getMinecraft().currentServerData
 
-            currentServer = if (serverData != null) { // i hate this kind of syntax, difficult to read.
+            currentServer = if (serverData != null) { 
                 println(String.format("Player joined server with ip <%s>", serverData.serverIP))
                 if (serverData.serverIP.contains("hypixel")) Hypixel(player, serverData) else Server(player, serverData)
             } else {
