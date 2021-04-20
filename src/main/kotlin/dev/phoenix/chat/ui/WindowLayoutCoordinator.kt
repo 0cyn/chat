@@ -1,6 +1,5 @@
-package dev.phoenix.chat.window
+package dev.phoenix.chat.ui
 
-import dev.phoenix.chat.ui.ChatFrame
 import dev.phoenix.chat.server.chat.ChatContext
 
 /**
@@ -11,6 +10,7 @@ import dev.phoenix.chat.server.chat.ChatContext
 object WindowLayoutCoordinator {
 
     val frame: ChatFrame = ChatFrame()
+
     fun createTabForChatContext(context: ChatContext) {
         frame.createTabWithName(context.title)
     }

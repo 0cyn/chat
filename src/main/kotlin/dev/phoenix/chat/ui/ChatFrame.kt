@@ -1,22 +1,12 @@
 package dev.phoenix.chat.ui
 
 import com.formdev.flatlaf.FlatDarkLaf
-import dev.phoenix.chat.Client
 import dev.phoenix.chat.ui.TabCloseCallbackHolder.*
-import dev.phoenix.chat.ui.TabPanel
 import java.awt.*
-import java.awt.event.ActionEvent
 import java.awt.image.BufferedImage
-import java.io.IOException
 import java.util.*
-import java.util.function.BiConsumer
-import java.util.function.IntConsumer
+import javax.imageio.ImageIO
 import javax.swing.*
-import javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER
-import javax.swing.text.BadLocationException
-import javax.swing.text.DefaultCaret
-import javax.swing.text.html.HTMLDocument
-import javax.swing.text.html.HTMLEditorKit
 
 /**
  * @author _kritanta
@@ -33,7 +23,7 @@ class ChatFrame : JFrame() {
     }
 
     fun createTabWithName(name: String) {
-        val tab = TabPanel(name)
+        val tab = TabPanel(name, this)
         tabbedPane.addTab(name, tab)
         tabsByName[name] = tab
     }
@@ -64,7 +54,6 @@ class ChatFrame : JFrame() {
                 contentPaneLayout.createParallelGroup()
                         .addComponent(tabbedPane)
         )
-
         pack()
 
         setLocationRelativeTo(owner)
@@ -86,13 +75,12 @@ class ChatFrame : JFrame() {
     }
 
     val tabbedPane = JTabbedPane()
-
     init {
         FlatDarkLaf.install()
         println(UIManager.getLookAndFeel().name)
         initComponents()
         title = "Chat"
-        val icon: Image = ImageIcon(getClass().getResource("/icon.png"))
+        val icon: Image = BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE)
         iconImage = icon
         SwingUtilities.updateComponentTreeUI(contentPane)
         defaultCloseOperation = DISPOSE_ON_CLOSE

@@ -1,4 +1,4 @@
-package dev.phoenix.chat
+package dev.phoenix.chat.mod
 
 import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -38,7 +38,7 @@ object Client {
             val player = event.entity as EntityPlayerSP
             val serverData = Minecraft.getMinecraft().currentServerData
 
-            currentServer = if (serverData != null) { 
+            currentServer = if (serverData != null) {
                 Chat.logDebug(String.format("Player joined server with ip <%s>", serverData.serverIP))
                 if (serverData.serverIP.contains("hypixel")) Hypixel(player, serverData) else Server(player, serverData)
             } else {
@@ -46,7 +46,7 @@ object Client {
                 // TODO set up some sort of local server chat UI
             }
 
-            this.player = player
+            Client.player = player
             currentServer!!.configureChatClients()
         } else if (event.entity is EntityOtherPlayerMP) {
             return

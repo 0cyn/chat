@@ -1,12 +1,13 @@
 package dev.phoenix.chat.mod
 
-import dev.phoenix.chat.Client
-import dev.phoenix.chat.window.WindowLayoutCoordinator
+import dev.phoenix.chat.mod.Client
+import dev.phoenix.chat.ui.WindowLayoutCoordinator
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
+import javax.swing.JFrame
 
 /**
  * Mod object and global generic object we can reference
@@ -18,9 +19,9 @@ object Chat {
 
     @Mod.EventHandler
     fun preinit(e: FMLPreInitializationEvent) {
-        config = Configuration(e.suggestedConfigurationFile)
-        config!!.load()
-
+        //config = Configuration(e.suggestedConfigurationFile)
+        //config!!.load()
+        WindowLayoutCoordinator.frame
     }
 
     fun setConfigValue(value: String?, option: Boolean) {
@@ -33,10 +34,9 @@ object Chat {
         config!!.save()
     }
 
-    fun logDebug(msg: String?) {
-        if (!Client.currentServer.chatClients.containsKey("Debug"))
-            return;
-        WindowLayoutCoordinator.displayLineFromContext(Client.currentServer.chatClients["Debug"].context, msg)
+    fun logDebug(msg: String) {
+        return
+        // TODO write this
     }
 
 

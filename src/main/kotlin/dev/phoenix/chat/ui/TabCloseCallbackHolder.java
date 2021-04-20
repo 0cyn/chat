@@ -1,7 +1,5 @@
 package dev.phoenix.chat.ui;
 
-import dev.phoenix.chat.window.WindowLayoutCoordinator;
-
 import javax.swing.*;
 import java.util.function.BiConsumer;
 

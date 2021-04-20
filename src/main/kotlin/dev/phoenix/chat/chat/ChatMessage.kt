@@ -1,14 +1,14 @@
-package dev.phoenix.chat.util 
+package dev.phoenix.chat.chat
 
-import net.minecraft.util.text.ITextComponent
+import net.minecraft.util.IChatComponent
 
 /**
  * Abstracts the ITextComponent and performs some formatting on it
  */
-class ChatMessage(val message: ITextComponent) {
-    val plaintext: String? = message.unformattedText.replace("\\u00A7.".toRegex(), "")
-    val formatted: String? = message.formattedText 
-    var htmlFormattedString: String? = ChatMessage.renderFormattedStringAsHTML(message.formattedText)
+class ChatMessage(val message: IChatComponent) {
+    val plaintext: String = message.unformattedText.replace("\\u00A7.".toRegex(), "")
+    val formatted: String = message.formattedText
+    var htmlFormattedString: String = renderFormattedStringAsHTML(message.formattedText)
 
 
     companion object {
@@ -22,7 +22,7 @@ class ChatMessage(val message: ITextComponent) {
             val formatted = StringBuilder()         
 
             // Closer keeps track of all of the tags we need to close
-            var closer: Map<String, Int> = mapOf("span" to 0, "B" to 0, "U" to 0, "STRIKE" to 0, "I" to 0)
+            val closer: MutableMap<String, Int?> = mutableMapOf("span" to 0, "B" to 0, "U" to 0, "STRIKE" to 0, "I" to 0)
 
             // keeps track of index in original string
             var i = 0                               
@@ -118,10 +118,12 @@ class ChatMessage(val message: ITextComponent) {
                         // close up literally every other tag we've used.
                         for ((k, v) in closer)
                         {
-                            var j = v 
-                            while (j > 0) {
-                                formatted.append("</$k>")
-                                --j
+                            var j = v
+                            if (j != null) {
+                                while (j > 0) {
+                                    formatted.append("</$k>")
+                                    --j
+                                }
                             }
                         }
 
@@ -130,17 +132,25 @@ class ChatMessage(val message: ITextComponent) {
                         tagColor = "#FFFFFF"
                     }
                     
-                    if (closer[tagType] > 0) {
+                    if (closer[tagType]!! > 0) {
                         formatted.append("</$tagType>")
-                        closer[tagType] = closer[tagType] - 1
+                        var left: Int? = closer[tagType]
+                        if (left != null) {
+                            left -= 1
+                        }
+                        closer[tagType] = left
                     }
 
-                    if (tagType = "span")
+                    if (tagType == "span")
                         formatted.append("<span style=\"color:$tagColor\">")
                     else
                         formatted.append("<$tagType>")
 
-                    closer[tagType] = closer[tagType] + 1
+                    var left: Int? = closer[tagType]
+                    if (left != null) {
+                        left += 1
+                    }
+                    closer[tagType] = left
                     
                 } 
                 else {                                // not a section character
@@ -158,9 +168,6 @@ class ChatMessage(val message: ITextComponent) {
                 }
                 i++
             }
-
-            if (!didntFindColorCode) // make sure we close things up.
-                formatted.append("")
 
             return formatted.toString()
             

@@ -4,7 +4,7 @@ import dev.phoenix.chat.server.chat.ChatClient
 import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.client.multiplayer.ServerData
 import dev.phoenix.chat.server.chat.ChatType
-import dev.phoenix.chat.window.WindowLayoutCoordinator
+import dev.phoenix.chat.ui.WindowLayoutCoordinator
 import net.minecraftforge.common.MinecraftForge
 import java.util.*
 

@@ -1,9 +1,9 @@
 package dev.phoenix.chat.server.chat
 
-import dev.phoenix.chat.Client
-import dev.phoenix.chat.util.ChatMessage
+import dev.phoenix.chat.mod.Client
+import dev.phoenix.chat.chat.ChatMessage
 import dev.phoenix.chat.server.chat.ChatContext
-import dev.phoenix.chat.window.WindowLayoutCoordinator
+import dev.phoenix.chat.ui.WindowLayoutCoordinator
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 /**
@@ -19,7 +19,9 @@ class ChatClient(title: String, private val chatPrefix: String, var type: ChatTy
     }
 
     fun shouldHandleChat(message: ChatMessage): Boolean {
-        return context.messageQualifiesForContext(message.plaintext)
+        if (message.plaintext != null)
+            return context.messageQualifiesForContext(message.plaintext)
+        return false
     }
 
     fun removePrefix(message: String): String {

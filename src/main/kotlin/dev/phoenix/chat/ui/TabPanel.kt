@@ -1,16 +1,9 @@
 package dev.phoenix.chat.ui 
 
-import com.formdev.flatlaf.FlatDarkLaf
-import dev.phoenix.chat.Client
-import dev.phoenix.chat.ui.TabCloseCallbackHolder.*
-import dev.phoenix.chat.ui.TabPanel
+import dev.phoenix.chat.mod.Client
 import java.awt.*
 import java.awt.event.ActionEvent
-import java.awt.image.BufferedImage
 import java.io.IOException
-import java.util.*
-import java.util.function.BiConsumer
-import java.util.function.IntConsumer
 import javax.swing.*
 import javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER
 import javax.swing.text.BadLocationException
@@ -21,7 +14,7 @@ import javax.swing.text.html.HTMLEditorKit
 /**
  * Individual tab class.
  */
-class TabPanel(private val contextName: String) : JPanel() {
+class TabPanel(private val contextName: String, parent: JFrame) : MotionPanel(parent) {
     fun appendToChatPane(string: String?) {
         val doc = chatEditorPane!!.document as HTMLDocument
         val editorKit = chatEditorPane!!.editorKit as HTMLEditorKit

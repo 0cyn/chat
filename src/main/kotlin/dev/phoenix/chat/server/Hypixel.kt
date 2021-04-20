@@ -1,11 +1,11 @@
 package dev.phoenix.chat.server
 
+import dev.phoenix.chat.chat.ChatMessage
 import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.client.multiplayer.ServerData
 import dev.phoenix.chat.server.chat.ChatClient
 import dev.phoenix.chat.server.chat.ChatType
-import dev.phoenix.chat.util.ChatMessage
-import dev.phoenix.chat.window.WindowLayoutCoordinator
+import dev.phoenix.chat.ui.WindowLayoutCoordinator
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent

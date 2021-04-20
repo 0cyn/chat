@@ -14,7 +14,7 @@ import java.awt.event.MouseMotionAdapter
  * 
  * This class will allow it to be draggable without a title bar
  */
-class MotionPanel(private val parent: JFrame) : JPanel() {
+open class MotionPanel(private val parent: JFrame) : JPanel() {
     private var initialClick: Point? = null
 
     init {
