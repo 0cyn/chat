@@ -1,17 +1,30 @@
 package dev.phoenix.chat.chat
 
+import dev.phoenix.chat.server.hypixel.LocationTracker
+import dev.phoenix.chat.server.hypixel.ServerType
 import net.minecraft.util.IChatComponent
+import javax.xml.stream.Location
 
 /**
  * Abstracts the ITextComponent and performs some formatting on it
  */
 class ChatMessage(val message: IChatComponent) {
     val plaintext: String = message.unformattedText.replace("\\u00A7.".toRegex(), "")
+    val ampFormatted: String = message.formattedText.replace("\\u00A7".toRegex(), "&")
     val formatted: String = message.formattedText
+    val playerName: String = findPlayerName(message.unformattedText.replace("\\u00A7.".toRegex(), ""))
     var htmlFormattedString: String = renderFormattedStringAsHTML(message.formattedText)
 
 
     companion object {
+
+        private fun findPlayerName(plaintextMsg: String): String {
+            return plaintextMsg.split(':')[0].split(' ').last()
+        }
+
+        fun renderAmpFormattedAsHTML(message: String): String {
+            return renderFormattedStringAsHTML(message.replace("&", "§"))
+        }
 
         private fun renderFormattedStringAsHTML(message: String): String {
 

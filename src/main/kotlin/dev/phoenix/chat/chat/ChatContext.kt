@@ -1,22 +1,22 @@
 package dev.phoenix.chat.server.chat
 
+import dev.phoenix.chat.chat.ChatMessage
+import dev.phoenix.chat.mod.Client
+
 /**
  * Holds specific info for a Chat Client
  */
 class ChatContext(var title: String, var chatPrefix: String, var type: ChatType, var sendToContextCommand: String) {
-    fun messageQualifiesForContext(message: String): Boolean {
+    fun messageQualifiesForContext(message: ChatMessage): Boolean {
 
         if (type == ChatType.PRIVATE)
         {
-            // TODO: this is a non-portable hack for hypixel
-            // TODO: nons
-            // From rank playername:
-            if (message.startsWith("To ") || message.startsWith("From "))
+            if (message.ampFormatted.contains("&dTo") || message.ampFormatted.contains("&dFrom"))
             {
-                return message.split(' ')[2].dropLast(1) == title
+                return message.playerName == title || message.playerName == Client.player?.name
             }
         }
 
-        return message.startsWith(chatPrefix)
+        return message.plaintext.startsWith(chatPrefix)
     }
 }

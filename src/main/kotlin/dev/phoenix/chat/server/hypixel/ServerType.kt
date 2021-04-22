@@ -1,0 +1,32 @@
+package dev.phoenix.chat.server.hypixel
+
+enum class ServerType(val cleanName: String, val levelPrefix: Boolean) {
+    UNKNOWN("Unknown", false),
+    MAIN("Hub Lobby", false),
+    QUAKECRAFT("Quake", false),
+    WALLS("Walls", false),
+    PAINTBALL("Paintball", false),
+    SURVIVAL_GAMES("Blitz Survival Games", false),
+    TNTGAMES("TNT Games", false),
+    VAMPIREZ("VampireZ", false),
+    WALLS3("Mega Walls", false),
+    ARCADE("Arcade", false),
+    ARENA("Arena", false),
+    UHC("UHC Champions", true),
+    MCGO("Cops and Crims", false),
+    BATTLEGROUND("Warlords", true),
+    SUPER_SMASH("Smash Heros", false),
+    GINGERBREAD("Turbo Kart Racers", false),
+    HOUSING("Housing", false),
+    SKYWARS("Skywars", true),
+    TRUE_COMBAT("Crazy Walls", false),
+    SPEED_UHC("Speed UHC", true),
+    SKYCLASH("SkyClash", false),
+    LEGACY("Classic Games", false),
+    PROTOTYPE("Prototype", false),
+    BEDWARS("Bed Wars", true),
+    MURDER_MYSTERY("Murder Mystery", false),
+    BUILD_BATTLE("Build Battle", false),
+    DUELS("SkyBlock", true),
+    PIT("The Pit", true)
+}

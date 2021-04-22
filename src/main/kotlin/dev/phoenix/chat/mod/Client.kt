@@ -6,7 +6,10 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent
 import net.minecraft.client.Minecraft
 import dev.phoenix.chat.server.Hypixel
 import dev.phoenix.chat.server.Server
+import dev.phoenix.chat.server.hypixel.LocationTracker
 import net.minecraft.client.entity.EntityOtherPlayerMP
+import net.minecraft.world.World
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.network.FMLNetworkEvent
 
 /**
@@ -17,6 +20,7 @@ import net.minecraftforge.fml.common.network.FMLNetworkEvent
 object Client {
     var currentServer: Server? = null
     var player: EntityPlayerSP? = null
+    var world: World? = null
 
     fun sendChat(string: String?) {
         player!!.sendChatMessage(string)
@@ -33,7 +37,19 @@ object Client {
     fun entityJoinWorld(event: EntityJoinWorldEvent) {
         if (event.entity is EntityPlayerSP) {
 
-            if (currentServer != null) return
+            if (currentServer != null) {
+                if (currentServer is Hypixel)
+                {
+                    if (LocationTracker.waiting)
+                        return
+
+                    MinecraftForge.EVENT_BUS.register(LocationTracker)
+                    LocationTracker.waiting = true
+                    sendChat("/locraw")
+                    world = event.world
+                }
+                return
+            }
 
             val player = event.entity as EntityPlayerSP
             val serverData = Minecraft.getMinecraft().currentServerData
@@ -48,6 +64,7 @@ object Client {
 
             Client.player = player
             currentServer!!.configureChatClients()
+
         } else if (event.entity is EntityOtherPlayerMP) {
             return
             // TODO player list

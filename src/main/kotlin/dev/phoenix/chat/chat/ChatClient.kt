@@ -20,7 +20,7 @@ class ChatClient(title: String, private val chatPrefix: String, var type: ChatTy
 
     fun shouldHandleChat(message: ChatMessage): Boolean {
         if (message.plaintext != null)
-            return context.messageQualifiesForContext(message.plaintext)
+            return context.messageQualifiesForContext(message)
         return false
     }
 
