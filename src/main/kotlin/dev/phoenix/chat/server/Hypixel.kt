@@ -75,10 +75,15 @@ class Hypixel(client: EntityPlayerSP, server: ServerData) : Server(client, serve
     fun onChat(e: ClientChatReceivedEvent) {
         if (e.type.toInt() == 0) {
             val message = ChatMessage(e.message)
-            if (dev.phoenix.chat.chat.ChatFilter.isBegging(message.plaintext) >= 8)
-            {
-                e.isCanceled=true
-                WindowLayoutCoordinator.displayLineFromContext(chatClientMap["Blocked"]!!.context, message.htmlFormattedString + " -(" + dev.phoenix.chat.chat.ChatFilter.isBegging(message.plaintext))
+
+            if (client.name.contains("_kritanta"))
+                WindowLayoutCoordinator.displayLineFromContext(chatClientMap["Debug"]!!.context, message.ampFormatted)
+            if (message.isFromPlayer) {
+                if (client.name.contains("_kritanta") && dev.phoenix.chat.chat.ChatFilter.isBegging(message.plaintext.substringAfter(":")) >= 8)
+                {
+                    e.isCanceled=true
+                    WindowLayoutCoordinator.displayLineFromContext(chatClientMap["Blocked"]!!.context, message.htmlFormattedString + " -(" + dev.phoenix.chat.chat.ChatFilter.isBegging(message.plaintext))
+                }
             }
             if (message.plaintext.startsWith("{\"") && message.plaintext.contains("server"))
                 return; // /locraw command, just ignore it
@@ -111,7 +116,7 @@ class Hypixel(client: EntityPlayerSP, server: ServerData) : Server(client, serve
                 }
             }
             // if we've made it this far, the message qualified for no other chat clients
-            if (message.ampFormatted.contains("&f&r&f: ") || message.ampFormatted.contains("&7&r&7: "))
+            if (message.isFromPlayer)
                 WindowLayoutCoordinator.displayLineFromContext(lobbyClient.context, message.htmlFormattedString)
             else
                 WindowLayoutCoordinator.displayLineFromContext(gameClient.context, message.htmlFormattedString)

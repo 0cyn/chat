@@ -14,12 +14,17 @@ class ChatMessage(val message: IChatComponent) {
     val formatted: String = message.formattedText
     val playerName: String = findPlayerName(message.unformattedText.replace("\\u00A7.".toRegex(), ""))
     var htmlFormattedString: String = renderFormattedStringAsHTML(message.formattedText)
-
+    val isFromPlayer: Boolean = isPlayerMessage(message.formattedText)
 
     companion object {
 
         private fun findPlayerName(plaintextMsg: String): String {
             return plaintextMsg.split(':')[0].split(' ').last()
+        }
+
+        private fun isPlayerMessage(formatted: String): Boolean {
+            val ampf = formatted.replace("\\u00A7".toRegex(), "&")
+            return ampf.contains("&f&r&f: ") || ampf.contains("&7&r&7: ") || ampf.contains("&r&f:") ||  ampf.contains("&r&7:")
         }
 
         fun renderAmpFormattedAsHTML(message: String): String {

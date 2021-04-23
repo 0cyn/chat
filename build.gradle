@@ -24,11 +24,12 @@ sourceSets {
     main.java.srcDirs = ['src/main/kotlin']
 }
 
-version = "0.5.0"
+version = "0.6.0"
 group = "dev.phoenix"
 archivesBaseName = "Chat"
 fullName = "Phoenix Chat"
 modid = "chat"
+description = "Popout Chat Manager with custom server integration"
 
 project.sourceCompatibility = '1.8'
 project.targetCompatibility = '1.8'
@@ -61,15 +62,13 @@ processResources
             inputs.property "mcversion", minecraft.version
             inputs.property "modid", modid
             inputs.property "name", fullName
+            inputs.property "description", description
             from(sourceSets.main.resources.srcDirs) {
                 include 'mcmod.info'
 
-                expand 'version': project.version, 'mcversion': project.minecraft.version, 'modid': project.modid, 'name': project.name
+                expand 'version': project.version, 'mcversion': project.minecraft.version, 'modid': project.modid, 'name': project.name, 'description': project.description
             }
 
-            from(sourceSets.main.resources.srcDirs) {
-                exclude 'mcmod.info'
-            }
         }
 
 jar {
