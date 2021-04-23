@@ -27,6 +27,6 @@ enum class ServerType(val cleanName: String, val levelPrefix: Boolean) {
     BEDWARS("Bed Wars", true),
     MURDER_MYSTERY("Murder Mystery", false),
     BUILD_BATTLE("Build Battle", false),
-    DUELS("SkyBlock", true),
+    DUELS("Duels", true),
     PIT("The Pit", true)
 }
